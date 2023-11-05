@@ -2,6 +2,7 @@ import requests
 import lxml.etree
 import time
 import random
+import json
 
 # Global session for maintaining login
 main_session = requests.Session()
@@ -28,6 +29,11 @@ def login():
         print("Failed to login")
     return login_req.status_code
 
+def load_random_options():
+    with open('random_options.json', 'r') as file:
+        options = json.load(file)
+    return options
+
 # Function to scrape statistics from the forum
 def scrape_stats():
     global main_session
@@ -42,36 +48,27 @@ def scrape_stats():
     average_posts_per_day = stats_tree.xpath('//dt[text()="Average posts per day:"]/following-sibling::dd')[0].text.strip()
 
     time.sleep(6)
-    # Redirect to main page before scraping the new member stat
+
     main_page = main_session.get(FORUM_URL)
     time.sleep(6)
     main_tree = lxml.etree.HTML(main_page.text.encode())
     
     newest_member_element = main_tree.xpath('//*[@id="upshrink_stats"]/p[1]/strong[1]/a')
     
-    # Double check new member stat
     if newest_member_element:
         newest_member = newest_member_element[0].text
     else:
         newest_member = "Newest Member not found"
 
-    # Set options for daily generated messages and recommendations
-    # Can have an infinite amount of options for each variable
-    tv_show_options = ["option1", "option2", "option3"]
-    movie_options = ["option1", "option2", "option3"]
-    song_options = ["option1", "option2", "option3"]
-    video_game_options = ["option1", "option2", "option3"]
-    message_of_the_day_options = ["option1", "option2", "option3"]
-    word_of_the_day_options = ["option1", "option2", "option3"]
-    ai_image_prompt_options = ["option1", "option2", "option3"]
+    options = load_random_options()
 
-    tv_show = random.choice(tv_show_options)
-    movie = random.choice(movie_options)
-    song = random.choice(song_options)
-    video_game = random.choice(video_game_options)
-    message_of_the_day = random.choice(message_of_the_day_options)
-    word_of_the_day = random.choice(word_of_the_day_options)
-    ai_image_prompt = random.choice(ai_image_prompt_options)
+    tv_show = random.choice(options['tv_show_options'])
+    movie = random.choice(options['movie_options'])
+    song = random.choice(options['song_options'])
+    video_game = random.choice(options['video_game_options'])
+    message_of_the_day = random.choice(options['message_of_the_day_options'])
+    word_of_the_day = random.choice(options['word_of_the_day_options'])
+    ai_image_prompt = random.choice(options['ai_image_prompt_options'])
     total_posts += 1
 
     total_posts_with_commas = format(total_posts, ',')
@@ -175,6 +172,6 @@ if login() == 200:
         print("Daily message posted.")
 
         # Wait for 24 hours before posting the next daily message
-        print("Waiting 24 hours till next post...")
+        print("Waitng 24 hours till next post...")
         time.sleep(24 * 60 * 60)
         print("24 hours passed. Preparing to post...")
