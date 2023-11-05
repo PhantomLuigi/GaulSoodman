@@ -1,0 +1,9 @@
+{
+  "tv_show_options": ["Breaking Bad", "Better Call Saul", "JoJo's Bizarre Adventure"],
+  "movie_options": ["The Shawshank Redemption", "The Godfather", "Pulp Fiction", "The Truman Show"],
+  "song_options": ["Ghosts n' Stuff by Deadmau5", "Without You by Avicii", "Stimulate by Eminem"],
+  "video_game_options": ["The Legend of Zelda: Breath of the Wild", "Super Mario Odyssey", "Undertale", "The Sims 4"],
+  "message_of_the_day_options": ["Hi, My name is Gaul Soodman, and this is the test of my functionality", "Just testing my code", "Testing..."],
+  "word_of_the_day_options": ["Serendipity", "Ephemeral", "Surreptitious"],
+  "ai_image_prompt_options": ["Create a drawing of a futuristic city skyline.", "Design a sci-fi spaceship.", "Paint a serene landscape."]
+}
